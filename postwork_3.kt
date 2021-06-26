@@ -43,33 +43,33 @@ class Mobile(
     }
 }
 
-class ShoppingCar() {
-    private var car: MutableList<Mobile> = mutableListOf<Mobile>()
+class ShoppingCart() {
+    private var cart: MutableList<Mobile> = mutableListOf<Mobile>()
     var total = 0f
         private set
 
     fun add(mobile : Mobile) {
-         if (car.add(mobile)) {
+         if (cart.add(mobile)) {
              total += mobile.price
              println("El celular con SKU: ${mobile.sku} fue añadido del carrito")
          }
     }
     fun remove (mobile : Mobile) {
-        if(car.remove(mobile)) {
+        if(cart.remove(mobile)) {
             total -= mobile.price
             println("El celular con SKU: ${mobile.sku} fue eliminado del carrito")
         }
     }
 
-    fun emptyShoppingCar() {
-        car.removeAll { true }
+    fun emptyShoppingCart() {
+        cart.removeAll { true }
         total = 0f
         println("El carro esta vacio")
     }
 
     fun viewCart(){
         println("Carrito de compra:")
-        for (mobile in car) println("Mobile SKU: ${mobile.sku} y su precio: ${mobile.price}")
+        for (mobile in cart) println("Mobile SKU: ${mobile.sku} y su precio: ${mobile.price}")
     }
 
     fun buy(){
@@ -87,15 +87,15 @@ fun main() {
     val mobile2 = Mobile(567, "Samsung", "White", "Galaxy Z", 20_659f)
     val mobile3 = Mobile(999, "Huawei", "Blue", "Mate 20", 17_500f)
 
-    val car =  ShoppingCar()
+    val cart =  ShoppingCart()
 
-    car.add(mobile1)
-    car.add(mobile2)
-    car.viewCart()
-    car.add(mobile3)
-    car.remove(mobile1)
-    car.viewCart()
-    car.add(mobile1)
-    car.buy()
+    cart.add(mobile1)
+    cart.add(mobile2)
+    cart.viewCart()
+    cart.add(mobile3)
+    cart.remove(mobile1)
+    cart.viewCart()
+    cart.add(mobile1)
+    cart.buy()
 
 }
