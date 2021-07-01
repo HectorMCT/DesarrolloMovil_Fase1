@@ -1,7 +1,9 @@
 package model
 
-open class Stats(val facility: Double, val clarity: Double, val recommendation: Double) {
-
+/**
+ * Clase abstracta que representa las estadisticas en común de un profesor y una materia
+ */
+abstract class Stats(val facility: Double, val clarity: Double, val recommendation: Double) {
     init {
         val range = 0.0..100.0
         when {

@@ -1,9 +1,9 @@
 package model
 
 /**
- *
+ * Subject Stats
  */
-class SubjectStats//Range
+class SignatureStats//Range
     (facility: Double,
      clarity: Double,
      recommendation: Double,//Stats
