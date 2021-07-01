@@ -4,14 +4,14 @@ package model
  * Subject Stats
  */
 class SignatureStats//Range
-    (facility: Double,
-     clarity: Double,
-     recommendation: Double,//Stats
-     val domain: Double,
-     val complexity: Double,
-     val fairEvaluation: Double,
-     val applyExams: Double,
-     val examsCount: Int?
+    (facility: Double = 0.0,
+     clarity: Double = 0.0,
+     recommendation: Double = 0.0,//Stats
+     val domain: Double = 0.0,
+     val complexity: Double = 0.0,
+     val fairEvaluation: Double = 0.0,
+     val applyExams: Double = 0.0,
+     val examsCount: Int = 0
 ) : Stats(facility, clarity, recommendation) {
 
     init {
@@ -25,8 +25,7 @@ class SignatureStats//Range
     }
 
     override fun toString(): String {
-        return """
-            ${super.toString()}
+        return """${super.toString()}
             ||-- Specific Stats --||
             Domain: $domain
             Complexity: $complexity

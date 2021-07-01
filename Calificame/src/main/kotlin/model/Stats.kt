@@ -3,7 +3,7 @@ package model
 /**
  * Clase abstracta que representa las estadisticas en común de un profesor y una materia
  */
-abstract class Stats(val facility: Double, val clarity: Double, val recommendation: Double) {
+abstract class Stats(var facility: Double = 0.0, var clarity: Double = 0.0, var recommendation: Double = 0.0) {
     init {
         val range = 0.0..100.0
         when {
@@ -15,7 +15,6 @@ abstract class Stats(val facility: Double, val clarity: Double, val recommendati
 
     override fun toString(): String {
         return """
-            ${'\n'}
             ||-- General Stats --||
             Facility: $facility
             Clarity: $clarity

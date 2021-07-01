@@ -10,18 +10,40 @@ class ProfessorStats(
     facility: Double,
     clarity: Double,
     recommendation: Double,
-    subjectsStats: MutableMap<Signature, SignatureStats> = mutableMapOf(),
-    reviews: MutableMap<Signature, Review> = mutableMapOf()
-) : Stats(facility, clarity, recommendation), Cloneable {
+    val signaturesStats: MutableMap<Signature, MutableList<SignatureStats>> = mutableMapOf(),
+    val reviews: MutableMap<Signature, MutableList<Review>> = mutableMapOf()
+) : Stats(facility, clarity, recommendation) {
 
-    //Subjects Stats
-    var subjectsStats : Map<Signature, SignatureStats>? = subjectsStats
+    fun getSignatures() = (signaturesStats.map { it.key } + reviews.map { it.key }).toSet()
+    fun getReviewsOf(signature: Signature) = reviews[signature]?.toList()
+    fun addReviewTo(signature : Signature, review: Review) = reviews[signature]?.add(review) ?: reviews.put(signature, mutableListOf(review))
+    fun getStatsOf(signature: Signature) = signaturesStats[signature]?.toList()
 
-    //Subjects Reviews
-    var reviews : Map<Signature, Review>? = reviews
+    fun addStatsTo(signature : Signature, stats: SignatureStats) {
+        signaturesStats[signature]?.add(stats) ?: signaturesStats.put(signature, mutableListOf(stats))
 
-    public override fun clone(): Any {
-        return super.clone()
+        var facility= 0.0
+        var clarity= 0.0
+        var recommendation = 0.0
+
+        for(key in signaturesStats.keys){
+            var auxFacility = 0.0
+            var auxClarity= 0.0
+            var auxRecommendation = 0.0
+
+            for (value in signaturesStats[key]!!){
+                auxFacility += value.facility
+                auxClarity += value.clarity
+                auxRecommendation += value.recommendation
+            }
+            facility += auxFacility / signaturesStats[key]!!.size
+            clarity += auxClarity / signaturesStats[key]!!.size
+            recommendation += auxRecommendation / signaturesStats[key]!!.size
+        }
+        this.facility = facility / signaturesStats.size
+        this.clarity = clarity / signaturesStats.size
+        this.recommendation = recommendation / signaturesStats.size
     }
+    fun generalStats() = super.toString()
 
 }
