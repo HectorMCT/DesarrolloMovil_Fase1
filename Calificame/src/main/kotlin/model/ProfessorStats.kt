@@ -10,8 +10,8 @@ class ProfessorStats(
     facility: Double,
     clarity: Double,
     recommendation: Double,
-    subjectsStats: MutableMap<Signature, SignatureStats>?,
-    reviews: MutableMap<Signature, Review>?
+    subjectsStats: MutableMap<Signature, SignatureStats> = mutableMapOf(),
+    reviews: MutableMap<Signature, Review> = mutableMapOf()
 ) : Stats(facility, clarity, recommendation), Cloneable {
 
     //Subjects Stats

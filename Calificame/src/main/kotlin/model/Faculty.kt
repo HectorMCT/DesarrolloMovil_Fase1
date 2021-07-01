@@ -13,9 +13,6 @@ ${professorToString()}
 """.trimIndent()
     }
 
-
-
-
     private fun professorToString() : String {
         if (this.professors != null && this.professors!!.isNotEmpty()) {
             var professors = ""
@@ -28,7 +25,8 @@ ${professorToString()}
     override fun toString(): String = "Professor: $name"
     fun getProfessors() = professors.map { it.key.copy() }
     fun getProfessorStat(professor : Professor) = professors[professor]
-
-    //fun addProfessor(faculty : Faculty) = profes.add(faculty)
+    fun addProfessor(professor : Professor) = professors.putIfAbsent(
+        professor,
+        ProfessorStats(0.0,0.0, 0.0))
     //fun removeFaculty(faculty : String) = faculties.removeIf { it.name == faculty }
 }
