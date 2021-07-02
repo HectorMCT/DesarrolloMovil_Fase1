@@ -8,13 +8,15 @@ val signatures : MutableSet<Signature> = mutableSetOf()
 val usuarios : MutableSet<User> = mutableSetOf()
 
 val user = User("Anónimo", "Anónimo", "anomimo@example.com", "Anonimo", "anonimo")
+var actualUser = "INDETERMINADO"
 
 fun main() {
     usuarios.add(user)
     do {
         val logeado = menuLogin(usuarios)
         if (logeado.login) {
-            menuPricipal(universities, professors, signatures, logeado.usuario)
+            actualUser = logeado.usuario
+            menuPricipal(universities, professors, signatures)
         } else {
             println("Login incorrecto!")
         }
@@ -53,11 +55,10 @@ fun menuLogin(users : MutableSet<User>): StatusUser {
 /*              Menú principal              */
 fun menuPricipal(universities: MutableSet<University>,
                  professors: MutableSet<Professor>,
-                 signatures: MutableSet<Signature>,
-                 usuarioLog: String){
+                 signatures: MutableSet<Signature>){
     var opc : Int
     do {
-        println("||-----------------------------------${usuarioLog}||")
+        println("||-----------------------------------${actualUser}||")
         println("||-----------------App Califícame!----------------||")
         println("1. Agregar universidad")
         println("2. Eliminar universidad")
@@ -78,14 +79,14 @@ fun menuPricipal(universities: MutableSet<University>,
             5 -> Utils.printUniversities(universities)
             6 -> {
                 val uni = getUniversity(universities)
-                if (uni != null) menuUniversidad(uni, usuarioLog)
+                if (uni != null) menuUniversidad(uni)
             }
         }
     }while (opc != 0)
 }
 
 /*              Menú Universidad           */
-fun menuUniversidad(university: University, usuarioLog: String){
+fun menuUniversidad(university: University){
 
     fun faculties(func : (university: University, faculty: Faculty) -> Any){
         val faculty = getFaculty(university)
@@ -94,7 +95,7 @@ fun menuUniversidad(university: University, usuarioLog: String){
 
     var opc : Int
     do{
-        println("||-----------------------------------${usuarioLog}||")
+        println("||-----------------------------------${actualUser}||")
         println("||-----------------App Califícame!----------------||")
         println("Universidad: ${university.name}")
         println("1. Agregar facultad")
@@ -121,8 +122,8 @@ fun menuFacultad(university : University, faculty : Faculty){
 
     var opc : Int? = null
     do{
-        println("||------------------------------||")
-        println("App Califícame!")
+        println("||-----------------------------------${actualUser}||")
+        println("||-----------------App Califícame!----------------||")
         println("Universidad: ${university.name}")
         println("Facultad: ${faculty.name}")
         println("1. Ver lista de profesores de la facultad")
@@ -147,8 +148,8 @@ fun menuProfesor(university : University, faculty : Faculty, professor : Profess
     fun menuAddReviewStatsTo(stats: ProfessorStats, signature: Signature) {
         var opc : Int? = null
         do {
-            println("||------------------------------||")
-            println("App Califícame!")
+            println("||-----------------------------------${actualUser}||")
+            println("||-----------------App Califícame!----------------||")
             println("Universidad: ${university.name}")
             println("Facultad: ${faculty.name}")
             println("Profesor: ${professor.name}")
@@ -165,7 +166,7 @@ fun menuProfesor(university : University, faculty : Faculty, professor : Profess
     }
     var opc : Int? = null
     do{
-        println("||------------------------------------------------||")
+        println("||-----------------------------------${actualUser}||")
         println("||-----------------App Califícame!----------------||")
         println("Universidad: ${university.name}")
         println("Facultad: ${faculty.name}")
