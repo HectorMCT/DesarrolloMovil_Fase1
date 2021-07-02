@@ -1,20 +1,21 @@
 import model.*
 import utils.Utils
 
-//Variables globales
-val universities : MutableSet<University> = mutableSetOf()
-val professors : MutableSet<Professor> = mutableSetOf()
-val signatures : MutableSet<Signature> = mutableSetOf()
-val users : MutableSet<User> = mutableSetOf(User("Anónimo", ""))
-var currentUser = users.elementAt(0)
-
 fun main() {
-    menuLogin(users)
+    val universities : MutableSet<University> = mutableSetOf()
+    val professors : MutableSet<Professor> = mutableSetOf()
+    val signatures : MutableSet<Signature> = mutableSetOf()
+    val users : MutableSet<User> = mutableSetOf(User("Anónimo", ""))
+    menuLogin(universities, professors, signatures, users)
 }
 
 
 /*              Login Menu and Functions              */
-fun menuLogin(users: MutableSet<User>) {
+fun menuLogin(universities: MutableSet<University>,
+              professors: MutableSet<Professor>,
+              signatures: MutableSet<Signature>,
+              users: MutableSet<User>) {
+
     var opc: Int
     do{
         println("||-----------------App Califícame!----------------||")
@@ -25,37 +26,35 @@ fun menuLogin(users: MutableSet<User>) {
         opc = Utils.validRangeValue(0,3, "Digita una opción [0, 3]: " )
         when (opc) {
             1 -> {
-                val auxUser = userSignIn(users)
-                if (auxUser != null){
-                    currentUser = auxUser
+                val user = userSignIn(users)
+                if (user != null){
                     println("Login exitoso")
-                    menuPricipal(universities, professors, signatures)
-                }else{
+                    menuPricipal(universities, professors, signatures, user)
+                }else
                     println("Tu contraseña fue incorrecta, intentalo nuevamente o registrate nuevamente")
-                }
             }
             2 -> {
-                val auxUser = userSignUp(users)
-                if (auxUser != null) {
-                    users.add(auxUser)
-                    currentUser = auxUser
+                val user = userSignUp(users)
+                if (user != null) {
+                    users.add(user)
                     println("Registro exitoso")
-                    menuPricipal(universities, professors, signatures)
+                    menuPricipal(universities, professors, signatures, user)
                 }
             }
-            3 -> menuPricipal(universities, professors, signatures)
+            3 -> menuPricipal(universities, professors, signatures, users.elementAt(0))
         }
-        currentUser = users.elementAt(0)
     }while(opc != 0)
 }
 
 /*              Menú principal              */
 fun menuPricipal(universities: MutableSet<University>,
                  professors: MutableSet<Professor>,
-                 signatures: MutableSet<Signature>){
+                 signatures: MutableSet<Signature>,
+                 user: User) {
+
     var opc : Int
     do {
-        println("||-- Usuario: ${currentUser.username} --||")
+        println("||-- Usuario: ${user.username} --||")
         println("||-----------------App Califícame!----------------||")
         println("1. Agregar universidad")
         println("2. Eliminar universidad")
@@ -66,7 +65,7 @@ fun menuPricipal(universities: MutableSet<University>,
         println("7. Ver lista de universidades")
         println("8. Seleccionar universidad")
         println("0. Regresar")
-        opc = Utils.validRangeValue(0,6, "Digita una opción [0, 6]: " )
+        opc = Utils.validRangeValue(0,8, "Digita una opción [0, 8]: " )
         when(opc){
             1 -> addUniveristy(universities)
             2 -> removeUniversity(universities)
@@ -76,23 +75,22 @@ fun menuPricipal(universities: MutableSet<University>,
             6 -> removeSignature(signatures)
             7 -> Utils.printUniversities(universities)
             8 -> {
-                val uni = getUniversity(universities)
-                if (uni != null) menuUniversidad(uni)
+                val university = getUniversity(universities)
+                if (university != null) menuUniversidad(university, professors, signatures, user)
             }
         }
     }while (opc != 0)
 }
 
 /*              Menú Universidad           */
-fun menuUniversidad(university: University){
-    fun faculties(func : (university: University, faculty: Faculty) -> Any){
-        val faculty = getFaculty(university)
-        if (faculty != null) func(university, faculty)
-    }
+fun menuUniversidad(university: University,
+                    professors: MutableSet<Professor>,
+                    signatures: MutableSet<Signature>,
+                    user: User) {
 
     var opc : Int
     do{
-        println("||-- Usuario: ${currentUser.username} --||")
+        println("||-- Usuario: ${user.username} --||")
         println("||-----------------App Califícame!----------------||")
         println("Universidad: ${university.name}")
         println("1. Agregar facultad")
@@ -100,24 +98,32 @@ fun menuUniversidad(university: University){
         println("3. Ver lista de facultades")
         println("4. Seleccionar facultad")
         println("0. Regresar")
-        opc = Utils.validRangeValue(0,6, "Digita una opción [0, 4]: " )
+        opc = Utils.validRangeValue(0,4, "Digita una opción [0, 4]: " )
         when (opc) {
             1 -> addFacultyTo(university)
-            2 -> faculties(::removeFacultyOf)
+            2 -> removeFacultyOf(university)
             3 -> Utils.printFaculties(university)
-            4 -> faculties(::menuFacultad)
+            4 -> {
+                val faculty = getFaculty(university)
+                if (faculty != null) menuFacultad(university, faculty, professors, signatures, user)
+            }
         }
     }while(opc != 0)
 }
 
-fun menuFacultad(university : University, faculty : Faculty){
+fun menuFacultad(university : University,
+                 faculty : Faculty,
+                 professors: MutableSet<Professor>,
+                 signatures: MutableSet<Signature>,
+                 user: User){
+
     fun professor(func : (faculty: Faculty, professor: Professor) -> Any){
         val prof = getProfessor(professors)
         if (prof != null) func(faculty, prof)
     }
     var opc: Int
     do{
-        println("||-- Usuario: ${currentUser.username} --||")
+        println("||-- Usuario: ${user.username} --||")
         println("||-----------------App Califícame!----------------||")
         println("Universidad: ${university.name}")
         println("Facultad: ${faculty.name}")
@@ -129,21 +135,26 @@ fun menuFacultad(university : University, faculty : Faculty){
         opc = Utils.validRangeValue(0,4, "Digita una opción [0, 4]: " )
         when (opc) {
             1 -> Utils.printProfessors(faculty.getProfessors())
-            2 -> professor(::addProfessorToFaculty)
+            2 -> professor(::addProfessorTo)
             3 -> professor(::removeProfessorOf)
             4 -> {
-                val prof = getProfessor(faculty.getProfessors())
-                if (prof != null) menuProfesor(university, faculty, prof)
+                val professor = getProfessor(faculty.getProfessors())
+                if (professor != null) menuProfesor(university, faculty, professor, signatures, user)
             }
         }
     }while(opc != 0)
 }
 
-fun menuProfesor(university : University, faculty : Faculty, professor : Professor) {
-    fun menuAddReviewStatsTo(stats: ProfessorStats, signature: Signature) {
+fun menuProfesor(university : University,
+                 faculty : Faculty,
+                 professor : Professor,
+                 signatures: MutableSet<Signature>,
+                 user: User) {
+
+    fun menuAddReviewStatsTo(stats: ProfessorStats, signature: Signature, user: User) {
         var opc: Int
         do {
-            println("||-- Usuario: ${currentUser.username} --||")
+            println("||-- Usuario: ${user.username} --||")
             println("||-----------------App Califícame!----------------||")
             println("Universidad: ${university.name}")
             println("Facultad: ${faculty.name}")
@@ -155,14 +166,14 @@ fun menuProfesor(university : University, faculty : Faculty, professor : Profess
             opc = Utils.validRangeValue(0,2, "Digita una opción [0, 2]: " )
             when (opc) {
                 1 -> addStatsTo(stats, signature)
-                2 -> addReviewTo(stats, signature)
+                2 -> addReviewTo(stats, signature, user)
             }
         }while(opc != 0)
     }
 
     var opc: Int
     do{
-        println("||-- Usuario: ${currentUser.username} --||")
+        println("||-- Usuario: ${user.username} --||")
         println("||-----------------App Califícame!----------------||")
         println("Universidad: ${university.name}")
         println("Facultad: ${faculty.name}")
@@ -177,7 +188,7 @@ fun menuProfesor(university : University, faculty : Faculty, professor : Profess
             1 -> Utils.printSignatures(faculty.getProfessorStat(professor)!!.getSignatures())
             2 -> {
                 val signature = getSignature(signatures)
-                if (signature != null) menuAddReviewStatsTo(faculty.getProfessorStat(professor)!!, signature)
+                if (signature != null) menuAddReviewStatsTo(faculty.getProfessorStat(professor)!!, signature, user)
             }
             3 -> {
                 val signature = getSignature(faculty.getProfessorStat(professor)!!.getSignatures())
@@ -232,18 +243,18 @@ fun addFacultyTo(university : University ) {
 
 }
 
-fun addProfessorToFaculty(faculty : Faculty, professor : Professor) {
+fun addProfessorTo(faculty : Faculty, professor : Professor) {
     if (faculty.addProfessor(professor) == null)
         println("Profesor añadirdo correctamente")
     else
         println("Ya existe registro de este profesor en la facultad")
 }
 
-fun addReviewTo(professorStats: ProfessorStats, signature: Signature) {
+fun addReviewTo(professorStats: ProfessorStats, signature: Signature, user: User) {
     print("Ingresa tu comentario: ")
     val comment = readLine()!!
     val sat = Utils.validRangeValue(0.0, 100.0, "Ingresa tu satisfacción [0 - 100]: ")
-    professorStats.addReviewTo(signature, Review(currentUser , comment, sat))
+    professorStats.addReviewTo(signature, Review(user , comment, sat))
 }
 
 fun addStatsTo(professorStats: ProfessorStats, signature: Signature){
@@ -329,13 +340,15 @@ fun removeSignature(signatures: MutableSet<Signature>) {
 }
 
 
-fun removeFacultyOf(university: University, faculty: Faculty) {
-    if (university.removeFaculty(faculty))
-        println("Facultad eliminada correctamente")
-    else{
-        println("No se puedo eliminar la facultas solicitada")
-    }
+fun removeFacultyOf(university: University) {
+    val faculty = getFaculty(university)
+    if (faculty != null)
+        if (university.removeFaculty(faculty))
+            println("Facultad eliminada correctamente")
+        else
+            println("No se puedo eliminar la facultas solicitada")
 }
+
 fun removeProfessorOf(faculty: Faculty, professor: Professor) {
     if (faculty.removeProfessor(professor) != null)
         println("Profesor eliminado correctamente")
