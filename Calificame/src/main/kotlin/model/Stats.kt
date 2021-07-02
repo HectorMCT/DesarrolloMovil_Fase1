@@ -14,12 +14,10 @@ abstract class Stats(var facility: Double = 0.0, var clarity: Double = 0.0, var 
     }
 
     override fun toString(): String {
-        return """
-            ||-- General Stats --||
-            Facility: $facility
-            Clarity: $clarity
-            Recommendation: $recommendation
-        """.trimIndent()
+return """||-- General Stats --||
+Facility: $facility
+Clarity: $clarity
+Recommendation: $recommendation""".trimIndent()
     }
 
 }

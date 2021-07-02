@@ -19,9 +19,8 @@ class ProfessorStats(
     fun addReviewTo(signature : Signature, review: Review) = reviews[signature]?.add(review) ?: reviews.put(signature, mutableListOf(review))
     fun getStatsOf(signature: Signature) = signaturesStats[signature]?.toList()
 
-    fun addStatsTo(signature : Signature, stats: SignatureStats) {
-        signaturesStats[signature]?.add(stats) ?: signaturesStats.put(signature, mutableListOf(stats))
-
+    fun addStatsTo(signature : Signature, stats: SignatureStats) = signaturesStats[signature]?.add(stats) ?: signaturesStats.put(signature, mutableListOf(stats))
+    fun generalStats() : String{
         var facility= 0.0
         var clarity= 0.0
         var recommendation = 0.0
@@ -43,7 +42,7 @@ class ProfessorStats(
         this.facility = facility / signaturesStats.size
         this.clarity = clarity / signaturesStats.size
         this.recommendation = recommendation / signaturesStats.size
+        return super.toString()
     }
-    fun generalStats() = super.toString()
 
 }

@@ -1,9 +1,9 @@
 package model
 
 /**
- * Representa un usuario que contiene un username y un email
+ * Representa un usuario que contiene un username y contraseña
  */
-data class User(val name : String,
+/*data class User(val name : String,
                 val lastName : String,
                 val email : String,
                 val username : String,
@@ -12,4 +12,7 @@ data class User(val name : String,
     init {
         println("Bienvenido $name $lastName")
     }
-}
+
+}*/
+
+data class User(val username : String, val password : String)
