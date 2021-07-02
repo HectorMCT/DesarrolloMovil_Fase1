@@ -9,27 +9,35 @@ val usuarios : MutableSet<User> = mutableSetOf()
 
 val user = User("Anónimo", "Anónimo", "anomimo@example.com", "Anonimo", "anonimo")
 
-fun main(){
-    menuPricipal(universities, professors, signatures)
+fun main() {
+    usuarios.add(user)
+    do {
+        val logeado = menuLogin(usuarios)
+        if (logeado.login) {
+            menuPricipal(universities, professors, signatures, logeado.usuario)
+        } else {
+            println("Login incorrecto!")
+        }
+    } while (true)
 }
 
 
 /*              Login Menu and Functions              */
-fun menuLogin(users : MutableSet<User>){
+fun menuLogin(users : MutableSet<User>): StatusUser {
     var opc : Int? = null
     do{
         try {
             println("App Califícame!")
             println("1. Ingresar")
-            println("2. Registrar,e")
+            println("2. Registrarse")
             println("0. Salir")
             print("Digita una opción: ")
             opc = readLine()!!.toInt()
             when (opc) {
                 in 0..2 -> {
                     when (opc) {
-                        1 -> validateUser(users)
-                        2 -> addUser(users)
+                        1 -> return validateUser(users)
+                        2 -> return addUser(users)
                     }
                 }
                 else -> Utils.menuFail("Rango invalido")
@@ -38,17 +46,19 @@ fun menuLogin(users : MutableSet<User>){
             System.err.println("Error: ${e.message}. Rango valido [0, 2]")
         }
     }while(opc != 0)
+    return StatusUser(false, "DENEGADO")
 }
 
 
 /*              Menú principal              */
 fun menuPricipal(universities: MutableSet<University>,
                  professors: MutableSet<Professor>,
-                 signatures: MutableSet<Signature>){
+                 signatures: MutableSet<Signature>,
+                 usuarioLog: String){
     var opc : Int
     do {
-        println("||------------------------------||")
-        println("App Califícame!")
+        println("||-----------------------------------${usuarioLog}||")
+        println("||-----------------App Califícame!----------------||")
         println("1. Agregar universidad")
         println("2. Eliminar universidad")
         println("3. Agregar profesor")
@@ -68,14 +78,14 @@ fun menuPricipal(universities: MutableSet<University>,
             5 -> Utils.printUniversities(universities)
             6 -> {
                 val uni = getUniversity(universities)
-                if (uni != null) menuUniversidad(uni)
+                if (uni != null) menuUniversidad(uni, usuarioLog)
             }
         }
     }while (opc != 0)
 }
 
 /*              Menú Universidad           */
-fun menuUniversidad(university: University){
+fun menuUniversidad(university: University, usuarioLog: String){
 
     fun faculties(func : (university: University, faculty: Faculty) -> Any){
         val faculty = getFaculty(university)
@@ -84,8 +94,8 @@ fun menuUniversidad(university: University){
 
     var opc : Int
     do{
-        println("||------------------------------||")
-        println("App Califícame!")
+        println("||-----------------------------------${usuarioLog}||")
+        println("||-----------------App Califícame!----------------||")
         println("Universidad: ${university.name}")
         println("1. Agregar facultad")
         println("2. Eliminar facultad")
@@ -155,8 +165,8 @@ fun menuProfesor(university : University, faculty : Faculty, professor : Profess
     }
     var opc : Int? = null
     do{
-        println("||------------------------------||")
-        println("App Califícame!")
+        println("||------------------------------------------------||")
+        println("||-----------------App Califícame!----------------||")
         println("Universidad: ${university.name}")
         println("Facultad: ${faculty.name}")
         println("Profesor: ${professor.name}")
@@ -251,40 +261,46 @@ fun addStatsTo(professorStats: ProfessorStats, signature: Signature){
     professorStats.addStatsTo(signature, SignatureStats(facility, clarity, recommendation, domain, complexity, fairEvaluation, applyExams, examsCount))
 }
 
-fun addUser(users : MutableSet<User>) {
+fun addUser(users : MutableSet<User>): StatusUser {
 
     print("Nombre: ")
-    val name : String = readLine()!!
+    val name: String = readLine()!!
 
     print("Apellido: ")
-    val lastName : String = readLine()!!
+    val lastName: String = readLine()!!
 
     println("Correo: ")
-    val email : String = readLine()!!
+    val email: String = readLine()!!
 
     print("Username: ")
-    val username : String = readLine()!!
+    val username: String = readLine()!!
 
     print("Password: ")
-    val password : String = readLine()!!
+    val password: String = readLine()!!
 
-    if (users.add(User(name, lastName, email, username, password)))
+    return if (users.add(User(name, lastName, email, username, password))){
         println("Se registró exitosamente")
-    else
+        StatusUser(true, username)
+    }else{
         println("Ya existe el usuario")
+        StatusUser(true, username)
+    }
 }
 
-fun validateUser(users : MutableSet<User>) {
+fun validateUser(users : MutableSet<User>): StatusUser {
     print("Username: ")
     val username : String = readLine()!!
 
     print("Password: ")
     val password : String = readLine()!!
 
-    if (users.any { it.username == username && it.password == password })
+    return if (users.any { it.username == username && it.password == password }) {
         println("Bienvenido")
-    else
+        StatusUser(true, username)
+    } else {
         println("El usuario no existe!")
+        StatusUser(false, username)
+    }
 }
 
 /*              Remove Functions               */
