@@ -60,23 +60,22 @@ fun menuPricipal(universities: MutableSet<University>,
         println("1. Agregar universidad")
         println("2. Eliminar universidad")
         println("3. Agregar profesor")
-        println("*. Eliminar profesor")
-        println("4. Agregar materia")
-        println("*. Eliminar materia")
-        println("5. Ver lista de universidades")
-        println("6. Seleccionar universidad")
+        println("4. Eliminar profesor")
+        println("5. Agregar materia")
+        println("6. Eliminar materia")
+        println("7. Ver lista de universidades")
+        println("8. Seleccionar universidad")
         println("0. Regresar")
         opc = Utils.validRangeValue(0,6, "Digita una opción [0, 6]: " )
         when(opc){
             1 -> addUniveristy(universities)
-            2 -> {
-                val uni = getUniversity(universities)
-                if (uni != null) removeUniversity(universities, uni)
-            }
+            2 -> removeUniversity(universities)
             3 -> addProfessor(professors)
-            4 -> addSignature(signatures)
-            5 -> Utils.printUniversities(universities)
-            6 -> {
+            4 -> removeProfessor(professors)
+            5 -> addSignature(signatures)
+            6 -> removeSignature(signatures)
+            7 -> Utils.printUniversities(universities)
+            8 -> {
                 val uni = getUniversity(universities)
                 if (uni != null) menuUniversidad(uni)
             }
@@ -86,7 +85,6 @@ fun menuPricipal(universities: MutableSet<University>,
 
 /*              Menú Universidad           */
 fun menuUniversidad(university: University){
-
     fun faculties(func : (university: University, faculty: Faculty) -> Any){
         val faculty = getFaculty(university)
         if (faculty != null) func(university, faculty)
@@ -113,12 +111,10 @@ fun menuUniversidad(university: University){
 }
 
 fun menuFacultad(university : University, faculty : Faculty){
-
     fun professor(func : (faculty: Faculty, professor: Professor) -> Any){
         val prof = getProfessor(professors)
         if (prof != null) func(faculty, prof)
     }
-
     var opc: Int
     do{
         println("||-- Usuario: ${currentUser.username} --||")
@@ -306,12 +302,33 @@ fun userSignUp(users : MutableSet<User>) : User? {
 }
 
 /*              Remove Functions               */
-fun removeUniversity(universities : MutableSet<University>, university: University) {
-    if (universities.remove(university))
-        println("Universidad eliminada correctamente")
-    else
-        println("No se puedo eliminar la universidad solicitada")
+fun removeUniversity(universities : MutableSet<University>) {
+    val university = getUniversity(universities)
+    if (university != null)
+        if (universities.remove(university))
+            println("Universidad eliminada correctamente")
+        else
+            println("No se puedo eliminar la universidad solicitada")
 }
+fun removeProfessor(professors: MutableSet<Professor>) {
+    val professor = getProfessor(professors)
+    if (professor != null)
+        if (professors.remove(professor))
+            println("Profesor(a) eliminado correctamente")
+        else
+            println("No se puedo eliminar el profesor(a) solicitado")
+}
+
+fun removeSignature(signatures: MutableSet<Signature>) {
+    val signature = getSignature(signatures)
+    if (signature != null)
+        if (signatures.remove(signature))
+            println("Materia eliminado correctamente")
+        else
+            println("No se puedo eliminar la materia solicitada, intentalo nuevamente")
+}
+
+
 fun removeFacultyOf(university: University, faculty: Faculty) {
     if (university.removeFaculty(faculty))
         println("Facultad eliminada correctamente")
