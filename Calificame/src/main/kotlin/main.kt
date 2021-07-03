@@ -18,7 +18,7 @@ fun menuLogin(universities: MutableSet<University>,
 
     var opc: Int
     do{
-        Utils.printHeader(withUser = false)
+        Utils.printHeader()
         println("1. Ingresar")
         println("2. Registrarse")
         println("3. Ingresar anonimamente")
@@ -109,6 +109,7 @@ fun menuUniversidad(university: University,
     }while(opc != 0)
 }
 
+/*              Menú Facultad           */
 fun menuFacultad(university : University,
                  faculty : Faculty,
                  professors: MutableSet<Professor>,
@@ -142,12 +143,13 @@ fun menuFacultad(university : University,
     }while(opc != 0)
 }
 
+/*              Menú Profesor           */
 fun menuProfesor(university : University,
                  faculty : Faculty,
                  professor : Professor,
                  signatures: MutableSet<Signature>,
                  user: User) {
-
+    /*              Menú para añadir reviews y/o stats           */
     fun menuAddReviewStatsTo(stats: ProfessorStats, signature: Signature) {
         var opc: Int
         do {
@@ -194,6 +196,53 @@ fun menuProfesor(university : University,
             }
         }
     }while(opc != 0)
+}
+
+/*               Sing in Function           */
+fun userSignIn(users: MutableSet<User>) : User? {
+    var username : String
+    println("Ingresa 0 para regresar")
+    print("Ingresa tu username: ")
+    do {
+        username = readLine()!!
+        when (username){
+            "0" -> return null
+            else -> {
+                if (!Utils.existUsernameIn(users, username)) {
+                    println("El nombre de usuario $username no existe, puedes intentar corregirlo o registrate")
+                    print("Ingresa otro nombre de usuario o 0 para regresar: ")
+                } else break
+            }
+        }
+    }while(true)
+    print("Ingresa tu contraseña: ")
+    val password: String = readLine()!!
+
+    val user = users.find { it.username == username && it.password == password }
+    if (user != null) println("Contraseña incorrecta!")
+    return user
+}
+
+/*               Sing up Function           */
+fun userSignUp(users : MutableSet<User>) : User? {
+    var username : String
+    println("Ingresa 0 para regresar")
+    print("Ingresa tu nuevo username: ")
+    do {
+        username = readLine()!!
+        when (username){
+            "0" -> return null
+            else -> {
+                if (Utils.existUsernameIn(users, username)) {
+                    println("El nombre de usuario $username ya existe, puedes intentar iniciando sesión")
+                    print("Ingresa otro nombre de usuario o 0 para regresar: ")
+                } else break
+            }
+        }
+    }while(true)
+    print("Ingresa tu contraseña: ")
+    val password: String = readLine()!!
+    return User(username, password)
 }
 
 /*              Add Functions               */
@@ -264,51 +313,6 @@ fun addStatsTo(professorStats: ProfessorStats, signature: Signature){
     professorStats.addStatsTo(signature, SignatureStats(facility, clarity, recommendation, domain, complexity, fairEvaluation, applyExams, examsCount))
 }
 
-fun userSignIn(users: MutableSet<User>) : User? {
-    var username : String
-    println("Ingresa 0 para regresar")
-    print("Ingresa tu username: ")
-    do {
-        username = readLine()!!
-        when (username){
-            "0" -> return null
-            else -> {
-                if (!Utils.existUsernameIn(users, username)) {
-                    println("El nombre de usuario $username no existe, puedes intentar corregirlo o registrate")
-                    print("Ingresa otro nombre de usuario o 0 para regresar: ")
-                } else break
-            }
-        }
-    }while(true)
-    print("Ingresa tu contraseña: ")
-    val password: String = readLine()!!
-
-    val user = users.find { it.username == username && it.password == password }
-    if (user != null) println("Contraseña incorrecta!")
-    return user
-}
-
-fun userSignUp(users : MutableSet<User>) : User? {
-    var username : String
-    println("Ingresa 0 para regresar")
-    print("Ingresa tu nuevo username: ")
-    do {
-        username = readLine()!!
-        when (username){
-            "0" -> return null
-            else -> {
-                if (Utils.existUsernameIn(users, username)) {
-                    println("El nombre de usuario $username ya existe, puedes intentar iniciando sesión")
-                    print("Ingresa otro nombre de usuario o 0 para regresar: ")
-                } else break
-            }
-        }
-    }while(true)
-    print("Ingresa tu contraseña: ")
-    val password: String = readLine()!!
-    return User(username, password)
-}
-
 /*              Remove Functions               */
 fun removeUniversity(universities : MutableSet<University>) {
     val university = getUniversity(universities)
@@ -354,7 +358,7 @@ fun removeProfessorOf(faculty: Faculty, professor: Professor) {
 }
 
 
-/*          Getters           */
+/*          Getter Functions           */
 fun getUniversity(universities: Set<University>) : University? {
     if (universities.isNotEmpty()) {
         Utils.printUniversities(universities)
