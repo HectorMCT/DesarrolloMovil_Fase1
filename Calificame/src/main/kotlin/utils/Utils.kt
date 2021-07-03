@@ -82,6 +82,10 @@ class Utils {
         }
 
         fun existUsernameIn(users: MutableSet<User>, username : String) = users.any { it.username == username }
+        fun printHeader(user : User? = null, withUser : Boolean = true ){
+            if (withUser) println("||-- Usuario: ${user?.username} --||")
+            println("||-----------------App Califícame!----------------||")
+        }
     }
 
 }

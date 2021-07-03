@@ -18,7 +18,7 @@ fun menuLogin(universities: MutableSet<University>,
 
     var opc: Int
     do{
-        println("||-----------------App Califícame!----------------||")
+        Utils.printHeader(withUser = false)
         println("1. Ingresar")
         println("2. Registrarse")
         println("3. Ingresar anonimamente")
@@ -54,8 +54,7 @@ fun menuPricipal(universities: MutableSet<University>,
 
     var opc : Int
     do {
-        println("||-- Usuario: ${user.username} --||")
-        println("||-----------------App Califícame!----------------||")
+        Utils.printHeader(user)
         println("1. Agregar universidad")
         println("2. Eliminar universidad")
         println("3. Agregar profesor")
@@ -90,8 +89,7 @@ fun menuUniversidad(university: University,
 
     var opc : Int
     do{
-        println("||-- Usuario: ${user.username} --||")
-        println("||-----------------App Califícame!----------------||")
+        Utils.printHeader(user)
         println("Universidad: ${university.name}")
         println("1. Agregar facultad")
         println("2. Eliminar facultad")
@@ -123,8 +121,7 @@ fun menuFacultad(university : University,
     }
     var opc: Int
     do{
-        println("||-- Usuario: ${user.username} --||")
-        println("||-----------------App Califícame!----------------||")
+        Utils.printHeader(user)
         println("Universidad: ${university.name}")
         println("Facultad: ${faculty.name}")
         println("1. Ver lista de profesores de la facultad")
@@ -151,11 +148,10 @@ fun menuProfesor(university : University,
                  signatures: MutableSet<Signature>,
                  user: User) {
 
-    fun menuAddReviewStatsTo(stats: ProfessorStats, signature: Signature, user: User) {
+    fun menuAddReviewStatsTo(stats: ProfessorStats, signature: Signature) {
         var opc: Int
         do {
-            println("||-- Usuario: ${user.username} --||")
-            println("||-----------------App Califícame!----------------||")
+            Utils.printHeader(user)
             println("Universidad: ${university.name}")
             println("Facultad: ${faculty.name}")
             println("Profesor: ${professor.name}")
@@ -173,8 +169,7 @@ fun menuProfesor(university : University,
 
     var opc: Int
     do{
-        println("||-- Usuario: ${user.username} --||")
-        println("||-----------------App Califícame!----------------||")
+        Utils.printHeader(user)
         println("Universidad: ${university.name}")
         println("Facultad: ${faculty.name}")
         println("Profesor: ${professor.name}")
@@ -188,7 +183,7 @@ fun menuProfesor(university : University,
             1 -> Utils.printSignatures(faculty.getProfessorStat(professor)!!.getSignatures())
             2 -> {
                 val signature = getSignature(signatures)
-                if (signature != null) menuAddReviewStatsTo(faculty.getProfessorStat(professor)!!, signature, user)
+                if (signature != null) menuAddReviewStatsTo(faculty.getProfessorStat(professor)!!, signature)
             }
             3 -> {
                 val signature = getSignature(faculty.getProfessorStat(professor)!!.getSignatures())
