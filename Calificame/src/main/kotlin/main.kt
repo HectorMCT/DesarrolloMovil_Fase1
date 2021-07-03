@@ -178,7 +178,7 @@ fun menuProfesor(university : University,
         println("Universidad: ${university.name}")
         println("Facultad: ${faculty.name}")
         println("Profesor: ${professor.name}")
-        println(faculty.getProfessorStat(professor)!!.generalStats())
+        println(faculty.getProfessorStat(professor)!!)
         println("1. Ver lista de materias del profesor")
         println("2. Añadir stats/review de materia al profesor(a)")
         println("3. Seleccionar materia del profesor(a) para ver reviews y stats")

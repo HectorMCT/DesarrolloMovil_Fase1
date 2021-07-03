@@ -1,25 +1,25 @@
 package model
 
 /**
- * Representa las estisticas generales de un profesor
- * Hereda de la clase Stats, por lo cual contiene facilidad, claridad y recomendación
- * Adicionalmente, contiene un mapa de las estadisticas de cada materia que tenga registrada
- * y un mapa de reviews por cada materia registrada
+ * Representa las estisticas generales de un profesor de la aplicación Califícame!
+ * @constructor Crea las estadisticas de un profesor dadas su facilidad, claridad y recomendación.
+ * Adicionalmente, un [Map] de las estadisticas de cada materia que tenga estadisticas registradas
+ * y un [Map] de reviews por cada materia que tenga reviews registradas
+ * @throws Exception si facility, clarity o recommendation no están en el rango de valores de 1 - 100.
  */
 class ProfessorStats(
     facility: Double,
     clarity: Double,
     recommendation: Double,
-    val signaturesStats: MutableMap<Signature, MutableList<SignatureStats>> = mutableMapOf(),
-    val reviews: MutableMap<Signature, MutableList<Review>> = mutableMapOf()
+    private val signaturesStats: MutableMap<Signature, MutableList<SignatureStats>> = mutableMapOf(),
+    private val reviews: MutableMap<Signature, MutableList<Review>> = mutableMapOf()
 ) : Stats(facility, clarity, recommendation) {
-
     fun getSignatures() = (signaturesStats.map { it.key } + reviews.map { it.key }).toSet()
     fun getReviewsOf(signature: Signature) = reviews[signature]?.toList()
-    fun addReviewTo(signature : Signature, review: Review) = reviews[signature]?.add(review) ?: reviews.put(signature, mutableListOf(review))
     fun getStatsOf(signature: Signature) = signaturesStats[signature]?.toList()
+    fun addReviewTo(signature : Signature, review: Review) = reviews[signature]?.add(review) ?: reviews.put(signature, mutableListOf(review))
     fun addStatsTo(signature : Signature, stats: SignatureStats) = signaturesStats[signature]?.add(stats) ?: signaturesStats.put(signature, mutableListOf(stats))
-    fun generalStats() : String{
+    override fun toString() : String{
         var facility= 0.0
         var clarity= 0.0
         var recommendation = 0.0
