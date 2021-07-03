@@ -31,7 +31,7 @@ fun menuLogin(universities: MutableSet<University>,
                     println("Login exitoso")
                     menuPricipal(universities, professors, signatures, user)
                 }else
-                    println("Tu contraseña fue incorrecta, intentalo nuevamente o registrate nuevamente")
+                    println("Intentalo nuevamente o registrate")
             }
             2 -> {
                 val user = userSignUp(users)
@@ -64,7 +64,7 @@ fun menuPricipal(universities: MutableSet<University>,
         println("6. Eliminar materia")
         println("7. Ver lista de universidades")
         println("8. Seleccionar universidad")
-        println("0. Regresar")
+        println("0. Cerrar sesión")
         opc = Utils.validRangeValue(0,8, "Digita una opción [0, 8]: " )
         when(opc){
             1 -> addUniveristy(universities)
@@ -288,7 +288,9 @@ fun userSignIn(users: MutableSet<User>) : User? {
     print("Ingresa tu contraseña: ")
     val password: String = readLine()!!
 
-    return users.find { it.username == username && it.password == password }
+    val user = users.find { it.username == username && it.password == password }
+    if (user != null) println("Contraseña incorrecta!")
+    return user
 }
 
 fun userSignUp(users : MutableSet<User>) : User? {
