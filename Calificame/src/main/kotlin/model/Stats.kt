@@ -2,6 +2,7 @@ package model
 
 /**
  * Clase abstracta que representa las estadisticas en común de un profesor y una materia
+ * @throws Exception si facility, clarity o recommendation no están en el rango de valores de 1 - 100.
  */
 abstract class Stats(var facility: Double = 0.0, var clarity: Double = 0.0, var recommendation: Double = 0.0) {
     init {

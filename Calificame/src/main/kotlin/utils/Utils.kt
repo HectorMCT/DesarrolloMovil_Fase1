@@ -4,6 +4,7 @@ import model.*
 
 class Utils {
     companion object{
+        /*              Print Functions             */
         fun printUniversities(universities: Set<University>) {
             if (universities.isNotEmpty()) {
                 println("Universidades")
@@ -52,8 +53,15 @@ class Utils {
                 println("No hay reviews registradas")
         }
 
-        //Menu fail function
+        fun printHeader(user : User? = null){
+            if (user != null) println("||-- Usuario: ${user.username} --||")
+            println("||-----------------App Califícame!----------------||")
+        }
+
+        //Menu fail function, siempre lanza Exception
         fun menuFail(message : String) : Nothing = throw Exception(message)
+
+        /*            Valid range Functions            */
         fun validRangeValue(min : Int, max: Int, message : String) : Int {
             var value : Int? = null
             do {
@@ -65,7 +73,7 @@ class Utils {
                     println("Error: ${e.message}. Rango valido [$min, $max]")
                 }
             }while (value == null || value !in min..max)
-            return value!!
+            return value
         }
         fun validRangeValue(min : Double, max: Double, message : String) : Double {
             var value : Double? = null
@@ -78,10 +86,11 @@ class Utils {
                     println("Error: ${e.message}. Rango valido [$min, $max]")
                 }
             }while (value == null || value !in min..max)
-            return value!!
+            return value
         }
 
         fun existUsernameIn(users: MutableSet<User>, username : String) = users.any { it.username == username }
+
     }
 
 }

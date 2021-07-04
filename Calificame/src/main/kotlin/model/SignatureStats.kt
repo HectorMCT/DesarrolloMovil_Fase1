@@ -1,7 +1,11 @@
 package model
 
 /**
- * Subject Stats
+ * Representa las estisticas de una materia de la aplicación Califícame!
+ * @constructor Crea las estadisticas de una materia dadas la facilidad, claridad, recomendación
+ * dominio, complejidad, evaluación justa, si aplica examenes y la cantidad de examenes
+ * @throws Exception si facility, clarity, recommendation, domain, complexity
+ * fairEvaluation, applyExams, no están en el rango de valores de 1 - 100.
  */
 class SignatureStats//Range
     (facility: Double = 0.0,
