@@ -2,10 +2,103 @@ import model.*
 import utils.Utils
 
 fun main() {
-    val universities : MutableSet<University> = mutableSetOf()
-    val professors : MutableSet<Professor> = mutableSetOf()
-    val signatures : MutableSet<Signature> = mutableSetOf()
+    val universities : MutableSet<University>
+    val professors : MutableSet<Professor>
+    val signatures : MutableSet<Signature>
     val users : MutableSet<User> = mutableSetOf(User("Anónimo", ""))
+    println("Bienvenido a la BETA de la aplicación Califícame!")
+    println("- Si deseas iniciar con datos de prueba ingresa 1")
+    println("- Ingresa cualquier otra cosa para iniciar la aplicación desde 0")
+    print("Ingresa tu opción: ")
+    if (readLine()!! == "1"){
+        professors = mutableSetOf(
+            Professor("Hilda Castillo Zacatelco"),
+            Professor("Iván Olmos Pineda"),
+            Professor("Patricia Cervantes Márquez"),
+            Professor("Roberto Martinez Rodriguez")
+        )
+        signatures = mutableSetOf(
+            Signature("Programación I"),
+            Signature("Matemáticas Elementales"),
+            Signature("Sistemas Operativos"),
+            Signature("Derecho Penal")
+        )
+        universities = mutableSetOf(
+            University("Benemérita Universidad Autónoma de Puebla", mutableSetOf(
+                Faculty("Facultad de Cs. de la Computación", mutableMapOf(
+                    professors.elementAt(0) to ProfessorStats(signaturesStats = mutableMapOf(
+                        signatures.elementAt(0) to mutableListOf(
+                            SignatureStats(90.0, 100.0, 100.0, 95.0, 80.0, 100.0, 100.0, 3),
+                            SignatureStats(100.0, 100.0, 90.0, 95.0, 80.0, 100.0, 100.0, 3),
+                            SignatureStats(70.0, 80.0, 70.0, 90.0, 100.0, 90.0, 100.0, 3)
+                        )
+                    ), reviews = mutableMapOf(
+                        signatures.elementAt(0) to mutableListOf(
+                            Review(
+                                users.elementAt(0),
+                                "Una excelente profesora, sabe explicar muy bien la materia ys eimpre dispuesta a ayudar",
+                                100.0
+                            ),
+                            Review(
+                                users.elementAt(0),
+                                "La recomiendo si quieres aprender y trabajar mucho, siempre hay tareas, pero de que aprendes aprendes",
+                                90.0
+                            )
+                        )
+
+                    )),
+                    professors.elementAt(1) to ProfessorStats(signaturesStats = mutableMapOf(
+                        signatures.elementAt(2) to mutableListOf(
+                            SignatureStats(100.0, 100.0, 100.0, 100.0, 80.0, 100.0, 100.0, 2),
+                            SignatureStats(80.0, 100.0, 90.0, 95.0, 80.0, 100.0, 100.0, 2),
+                            SignatureStats(90.0, 90.0, 70.0, 80.0, 100.0, 80.0, 100.0, 2)
+                        )
+                    ), reviews = mutableMapOf(
+                        signatures.elementAt(2) to mutableListOf(
+                            Review(
+                                users.elementAt(0),
+                                "Un excelente profesor, nunca exige más de lo que enseña",
+                                100.0
+                            ),
+                            Review(
+                                users.elementAt(0),
+                                "Lo recomiendo si quieres aprender no apto para flojos",
+                                90.0
+                            )
+                        )
+
+                    ))
+                )),
+                Faculty("Facultad de Derecho y Cs. Sociales", mutableMapOf(
+                    professors.elementAt(3) to ProfessorStats(signaturesStats = mutableMapOf(
+                        signatures.elementAt(3) to mutableListOf(
+                            SignatureStats(40.0, 20.0, 30.0, 50.0, 80.0, 20.0, 100.0, 2),
+                            SignatureStats(10.0, 0.0, 10.0, 10.0, 80.0, 30.0, 100.0, 2),
+                            SignatureStats(20.0, 10.0, 0.0, 10.0, 100.0, 40.0, 100.0, 2)
+                        )
+                    ), reviews = mutableMapOf(
+                        signatures.elementAt(3) to mutableListOf(
+                            Review(
+                                users.elementAt(0),
+                                "Pesimo profesor, exámenes muy complicados para lo que enseña, falta mucho",
+                                20.0
+                            ),
+                            Review(
+                                users.elementAt(0),
+                                "Malisimo profesor, clases tediosas y complicadas",
+                                10.0
+                            )
+                        )
+                    ))
+                )),
+            ))
+        )
+    }else{
+        universities = mutableSetOf()
+        professors = mutableSetOf()
+        signatures = mutableSetOf()
+
+    }
 
     menuLogin(universities, professors, signatures, users)
 }
