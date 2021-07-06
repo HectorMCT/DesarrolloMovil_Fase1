@@ -14,9 +14,9 @@ import java.util.Date
 data class Review (val user : User, val comment : String, val satisfaction : Double, private val date : Date = Date()){
     override fun toString(): String {
 return """User: ${user.username}
-Date: ${SimpleDateFormat("dd.MM.yyyy hh:mm:ss").format(date)}
-Satisfaction: $satisfaction
-Comment: $comment 
+Fecha: ${SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(date)}
+Satisfacción: $satisfaction
+Comentario: $comment 
 """.trimIndent()
     }
 }

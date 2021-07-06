@@ -8,9 +8,9 @@ package model
  * @throws Exception si facility, clarity o recommendation no están en el rango de valores de 1 - 100.
  */
 class ProfessorStats(
-    facility: Double,
-    clarity: Double,
-    recommendation: Double,
+    facility: Double = 0.0,
+    clarity: Double = 0.0,
+    recommendation: Double = 0.0,
     private val signaturesStats: MutableMap<Signature, MutableList<SignatureStats>> = mutableMapOf(),
     private val reviews: MutableMap<Signature, MutableList<Review>> = mutableMapOf()
 ) : Stats(facility, clarity, recommendation) {
@@ -20,13 +20,17 @@ class ProfessorStats(
     fun addReviewTo(signature : Signature, review: Review) = reviews[signature]?.add(review) ?: reviews.put(signature, mutableListOf(review))
     fun addStatsTo(signature : Signature, stats: SignatureStats) = signaturesStats[signature]?.add(stats) ?: signaturesStats.put(signature, mutableListOf(stats))
     override fun toString() : String{
+        updateStats()
+        return super.toString()
+    }
+    private fun updateStats(){
         var size: Int
         var facility= 0.0
         var clarity= 0.0
         var recommendation = 0.0
 
         for(key in signaturesStats.keys){
-            
+
             var auxFacility = 0.0
             var auxClarity= 0.0
             var auxRecommendation = 0.0
@@ -41,14 +45,13 @@ class ProfessorStats(
             clarity += auxClarity / size
             recommendation += auxRecommendation / size
         }
-        
+
         size = signaturesStats.size
         if (size != 0){
             this.facility = facility / size
             this.clarity = clarity / size
             this.recommendation = recommendation / size
         }
-        return super.toString()
     }
 
 }
