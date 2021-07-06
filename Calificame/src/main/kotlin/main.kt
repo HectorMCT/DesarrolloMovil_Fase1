@@ -6,6 +6,7 @@ fun main() {
     val professors : MutableSet<Professor> = mutableSetOf()
     val signatures : MutableSet<Signature> = mutableSetOf()
     val users : MutableSet<User> = mutableSetOf(User("Anónimo", ""))
+
     menuLogin(universities, professors, signatures, users)
 }
 
@@ -281,15 +282,15 @@ fun addFacultyTo(university : University ) {
     val faculty : String = readLine()!!
 
     if (university.addFaculty(Faculty(faculty)))
-        println("La materia se añadio exitosamente")
+        println("La facultad se añadio exitosamente")
     else
-        println("Ya existe registro de esta materia")
+        println("Ya existe registro de esta facultad")
 
 }
 
 fun addProfessorTo(faculty : Faculty, professor : Professor) {
     if (faculty.addProfessor(professor) == null)
-        println("Profesor añadirdo correctamente")
+        println("Profesor añadido correctamente")
     else
         println("Ya existe registro de este profesor en la facultad")
 }
@@ -302,11 +303,11 @@ fun addReviewTo(professorStats: ProfessorStats, signature: Signature, user: User
 }
 
 fun addStatsTo(professorStats: ProfessorStats, signature: Signature){
-    val facility = Utils.validRangeValue(0.0, 100.0, "Ingresa su facilidad [0 - 100]: ")
-    val clarity = Utils.validRangeValue(0.0, 100.0, "Ingresa su claridad [0 - 100]: ")
-    val recommendation = Utils.validRangeValue(0.0, 100.0, "Ingresa tu recomendación [0 - 100]: ")
-    val domain = Utils.validRangeValue(0.0, 100.0, "Ingresa su dominio [0 - 100]: ")
-    val complexity = Utils.validRangeValue(0.0, 100.0, "Ingresa la complejidad [0 - 100]: ")
+    val facility = Utils.validRangeValue(0.0, 100.0, "Ingresa su facilidad con la materia [0 - 100]: ")
+    val clarity = Utils.validRangeValue(0.0, 100.0, "Ingresa su claridad explicando los temas de la materia [0 - 100]: ")
+    val recommendation = Utils.validRangeValue(0.0, 100.0, "Ingresa tu recomendación hacia el profesor [0 - 100]: ")
+    val domain = Utils.validRangeValue(0.0, 100.0, "Ingresa su dominio de la materia [0 - 100]: ")
+    val complexity = Utils.validRangeValue(0.0, 100.0, "Ingresa la complejidad con la que imparte la materia [0 - 100]: ")
     val fairEvaluation = Utils.validRangeValue(0.0, 100.0, "Que tan justo es al evaluar [0 - 100]: ")
     val applyExams = Utils.validRangeValue(0.0, 100.0, "Aplica examenes [0 - 100]: ")
     val examsCount = Utils.validRangeValue(0, Int.MAX_VALUE, "¿Cuántos examenes? [0 - ${Int.MAX_VALUE}]: ")
@@ -347,7 +348,7 @@ fun removeFacultyOf(university: University) {
         if (university.removeFaculty(faculty))
             println("Facultad eliminada correctamente")
         else
-            println("No se puedo eliminar la facultas solicitada")
+            println("No se puedo eliminar la facultad solicitada")
 }
 
 fun removeProfessorOf(faculty: Faculty, professor: Professor) {

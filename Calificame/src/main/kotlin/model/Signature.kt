@@ -6,5 +6,5 @@ package model
  * @property name Nombre de la materia
  */
 data class Signature(val name : String){
-    override fun toString() = "Subject: $name"
+    override fun toString() = "Materia: $name"
 }

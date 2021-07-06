@@ -6,5 +6,5 @@ package model
  * @property name Nombre del profesor
  */
 data class Professor(val name : String){
-    override fun toString() = "Professor: $name"
+    override fun toString() = "Profesor: $name"
 }

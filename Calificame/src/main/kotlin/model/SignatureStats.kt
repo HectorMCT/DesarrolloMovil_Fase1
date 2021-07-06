@@ -30,11 +30,11 @@ class SignatureStats//Range
 
     override fun toString(): String {
 return """${super.toString()}
-||-- Specific Stats --||
-Domain: $domain
-Complexity: $complexity
-Fair Evaluation: $fairEvaluation
-Apply Exams: $applyExams
-Exams count: ${examsCount ?: 0}""".trimIndent()
+||-- Estadísticas específicas --||
+Dominio: $domain
+Complejidad: $complexity
+Evaluación justa: $fairEvaluation
+¿Aplica exámenes?: $applyExams
+Cantidad de exámenes: ${examsCount ?: 0}""".trimIndent()
     }
 }
