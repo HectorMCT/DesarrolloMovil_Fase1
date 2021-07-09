@@ -1,4 +1,9 @@
-/*               POSTWORK 2              */
+/*Para este post work se tenía que trabajar con funciones y estructuras de datos. 
+Estos elementos dentro de Kotlin nos ayudaron a estructurar de mejor manera nuestro proyecto, 
+debido a que ahora podemos guardar múltiples datos tanto de profesores, cómo de calificaciones, 
+necesarias para el proyecto, de una manera más dinámica, esto con ayuda de estructuras de datos 
+mutables (Map y List).*/
+/*                                       POSTWORK 2                                         */
 fun main() {
     val email = "esiel_kar@hotmail.com"
     val contraseña = "123456"

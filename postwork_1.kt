@@ -1,4 +1,9 @@
-/*               POSTWORK 1              */
+/*Con respecto al primer entregable, se definió el proyecto que llevaremos a cabo durante 
+todo el curso, el cual tiene como nombre “Calificame” y cuya definición se encontrará más 
+adelante. Por otro lado, en lo que respecta al código y debido a que en la primera clase solo 
+se abordaron temas introductorios a Kotlin, se desarrolló una breve simulación de lo que sería 
+el proyecto.*/
+/*                                        POSTWORK 1                                        */
 fun main(){
     val productPrice = 200
     val productPrice2 = 150

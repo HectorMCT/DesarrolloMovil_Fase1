@@ -1,4 +1,15 @@
-/*               RETO FINAL 2              */
+/*Con respecto al uso de funciones, nos permite modularizar más nuestro código y agregar más 
+funcionalidad al proyecto. Se crearon tres funciones; la función califica nos permite ingresar 
+la calificación de una materia específica, dentro de ella se puede agregar materias que no se 
+encuentran en la lista, todo esto con ayuda de la función ingresaMateria. Por otro lado, 
+promedioReview nos ayuda a obtener el promedio de calificación hacia un profesor.
+
+Se implementó un menú para poder recoger calificaciones de una función. Dicha adición nos 
+proporcionó una perspectiva bastante más certera del comportamiento básico del programa. 
+El propio IDE nos brindó soluciones para evitar el uso de return a la hora de trabajar en 
+el menú para cada caso del when*/
+
+/*                                      RETO FINAL 2                                   */
 fun main() {
     val idProfe = mapOf(340960 to "Enrique", 219320 to "Aldo")
     //Se guardan las calificaciones de una materia o curso en una lista.

@@ -1,4 +1,9 @@
-/*               RETO FINAL 1              */
+/*En esta breve simulación se guardan los datos pertenecientes al profesor que se evaluará en 
+clase, los cuales se ingresan por la línea de comandos. Después, con un ciclo while y una 
+condición if, validamos que se ingrese una calificación de entre 1 a 5. Solo contando números 
+enteros. Por último, colocamos todo lo anterior dentro de un bucle while, con el propósito de 
+poder agregar más profesores.*/
+/*                                          RETO FINAL 1                                       */
 fun main(){
     var opc = 1;
 

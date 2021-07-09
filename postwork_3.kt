@@ -1,3 +1,17 @@
+/*En la sesión 3, se comenzó a abordar el paradigma “Programación Orientada a Objetos”, 
+mejor conocido como  POO, dado la importancia de éste en la actualidad fue indispensable 
+comenzar a trabajar el proyecto desde este paradigma. Primero se comenzó con los conceptos 
+de clases y objetos, posteriormente con los de constructores, getters y setters, para que 
+finalmente se diseñará una simulación de ventas de celulares mediante un carrito de compras.
+
+Para la actividad anterior, fue necesario la creación de la clase “Phone”, la cual representa un 
+celular y contiene las propiedades de un celular, adicionalmente se creó la clase ShoppingCart 
+simulando un carrito de compras en donde se agregaran o remover los celulares que se desean 
+comprar mediante métodos, así como un método para realizar la compra.
+
+El objetivo del post work fue entender la programación orientada a objetos, así como también, 
+la sintaxis que utiliza kotlin con la finalidad de poder aplicarla al proyecto.*/
+/*                                        POSTWORK 3                                        */
 const val PHONE_LENGTH = 10
 
 class User(

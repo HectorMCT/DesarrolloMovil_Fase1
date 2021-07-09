@@ -1,3 +1,11 @@
+/*En la sesión 6, se abordaron temas sobre la interoperabilidad de Java y Kotlin, es decir, 
+poder ocupar código escrito en Java en algún documento de Kotlin y viceversa.
+
+En el proyecto, priorizamos la utilización de código escrito en Kotlin, sin embargo, requerimos 
+el uso de la clase Date y FormatSimpleDate de las bibliotecas de java.utils y java.text 
+respectivamente, para el uso de fechas y de su impresión en terminal de manera legible para los 
+usuarios.*/
+/*                                        POSTWORK 6                                        */
 import java.text.NumberFormat
 import java.util.Currency
 
