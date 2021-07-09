@@ -1,5 +1,8 @@
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import model.*
 import utils.Utils
+import kotlin.random.Random
 
 fun main() {
     val universities : MutableSet<University> = mutableSetOf()
@@ -250,56 +253,80 @@ fun userSignUp(users : MutableSet<User>) : User? {
 fun addUniveristy(universities : MutableSet<University>) {
     print("Ingresa el nombre de la universidad: ")
     val university : String = readLine()!!
-
-    if (universities.add(University(university)))
-        println("La universidad se añadio exitosamente")
-    else
-        println("Ya existe registro de esta universidad")
+    runBlocking {
+        println("Añadiendo universidad, esto podria tomar unos segundos... ")
+        delay(Random.nextLong(4000))
+        if (universities.add(University(university)))
+            println("La universidad se añadio exitosamente")
+        else
+            println("Ya existe registro de esta universidad")
+    }
 }
 
 fun addProfessor(professors : MutableSet<Professor>) {
     print("Ingresa el nombre del profesor(a): ")
     val professor : String = readLine()!!
-
-    if (professors.add(Professor(professor)))
-        println("El profesor se añadio exitosamente")
-    else
-        println("Ya existe registro de esta profesor(a)")
+    runBlocking {
+        println("Añadiendo profesor, esto podria tomar unos segundos... ")
+        delay(Random.nextLong(4000))
+        if (professors.add(Professor(professor)))
+            println("El profesor se añadio exitosamente")
+        else
+            println("Ya existe registro de esta profesor(a)")
+    }
 }
 
 fun addSignature(signatures : MutableSet<Signature>) {
     print("Ingresa su nombre de la materia: ")
     val signature : String = readLine()!!
-
-    if (signatures.add(Signature(signature)))
-        println("La materia se añadio exitosamente")
-    else
-        println("Ya existe registro de esta materia")
+    runBlocking {
+        println("Añadiendo materia, esto podria tomar unos segundos... ")
+        delay(Random.nextLong(4000))
+        if (signatures.add(Signature(signature)))
+            println("La materia se añadio exitosamente")
+        else
+            println("Ya existe registro de esta materia")
+    }
 }
 
 fun addFacultyTo(university : University ) {
     print("Ingresa el nombre de la facultad: ")
     val faculty : String = readLine()!!
+    runBlocking {
+        println("Añadiendo facultad, esto podria tomar unos segundos... ")
+        delay(Random.nextLong(4000))
+        if (university.addFaculty(Faculty(faculty)))
+            println("La facultad se añadio exitosamente")
+        else
+            println("Ya existe registro de esta facultad")
+    }
 
-    if (university.addFaculty(Faculty(faculty)))
-        println("La facultad se añadio exitosamente")
-    else
-        println("Ya existe registro de esta facultad")
 
 }
 
 fun addProfessorTo(faculty : Faculty, professor : Professor) {
-    if (faculty.addProfessor(professor) == null)
-        println("Profesor añadido correctamente")
-    else
-        println("Ya existe registro de este profesor en la facultad")
+    runBlocking {
+        println("Añadiendo profesora la facultad, esto podria tomar unos segundos... ")
+        delay(Random.nextLong(4000))
+        if (faculty.addProfessor(professor) == null)
+            println("Profesor añadido correctamente")
+        else
+            println("Ya existe registro de este profesor en la facultad")
+    }
+
 }
 
 fun addReviewTo(professorStats: ProfessorStats, signature: Signature, user: User) {
     print("Ingresa tu comentario: ")
     val comment = readLine()!!
     val sat = Utils.validRangeValue(0.0, 100.0, "Ingresa tu satisfacción [0 - 100]: ")
-    professorStats.addReviewTo(signature, Review(user , comment, sat))
+    runBlocking {
+        println("Añadiendo review, esto podria tomar unos segundos... ")
+        delay(Random.nextLong(4000))
+        professorStats.addReviewTo(signature, Review(user , comment, sat))
+        println("Review añadida exitosamente!")
+
+    }
 }
 
 fun addStatsTo(professorStats: ProfessorStats, signature: Signature){
@@ -311,51 +338,79 @@ fun addStatsTo(professorStats: ProfessorStats, signature: Signature){
     val fairEvaluation = Utils.validRangeValue(0.0, 100.0, "Que tan justo es al evaluar [0 - 100]: ")
     val applyExams = Utils.validRangeValue(0.0, 100.0, "Aplica examenes [0 - 100]: ")
     val examsCount = Utils.validRangeValue(0, Int.MAX_VALUE, "¿Cuántos examenes? [0 - ${Int.MAX_VALUE}]: ")
-    professorStats.addStatsTo(signature, SignatureStats(facility, clarity, recommendation, domain, complexity, fairEvaluation, applyExams, examsCount))
+    runBlocking {
+        println("Añadiendo stat, esto podria tomar unos segundos... ")
+        delay(Random.nextLong(4000))
+        professorStats.addStatsTo(signature, SignatureStats(facility, clarity, recommendation, domain, complexity, fairEvaluation, applyExams, examsCount))
+        println("Stat añadida exitosamente!")
+    }
+
 }
 
 /*              Remove Functions               */
 fun removeUniversity(universities : MutableSet<University>) {
     val university = getUniversity(universities)
-    if (university != null)
-        if (universities.remove(university))
-            println("Universidad eliminada correctamente")
-        else
-            println("No se puedo eliminar la universidad solicitada")
+    runBlocking {
+        println("Eliminando universidad, esto podría tomar unos segundos...")
+        delay(Random.nextLong(4000))
+        if (university != null)
+            if (universities.remove(university))
+                println("Universidad eliminada correctamente")
+            else
+                println("No se puedo eliminar la universidad solicitada")
+
+    }
 }
 fun removeProfessor(professors: MutableSet<Professor>) {
     val professor = getProfessor(professors)
-    if (professor != null)
-        if (professors.remove(professor))
-            println("Profesor(a) eliminado correctamente")
-        else
-            println("No se puedo eliminar el profesor(a) solicitado")
+    runBlocking {
+        println("Eliminando profesor, esto podría tomar unos segundos...")
+        delay(Random.nextLong(4000))
+        if (professor != null)
+            if (professors.remove(professor))
+                println("Profesor(a) eliminado correctamente")
+            else
+                println("No se puedo eliminar el profesor(a) solicitado")
+    }
 }
 
 fun removeSignature(signatures: MutableSet<Signature>) {
     val signature = getSignature(signatures)
-    if (signature != null)
-        if (signatures.remove(signature))
-            println("Materia eliminado correctamente")
-        else
-            println("No se puedo eliminar la materia solicitada, intentalo nuevamente")
+    runBlocking {
+        println("Eliminando materia, esto podría tomar unos segundos...")
+        delay(Random.nextLong(4000))
+        if (signature != null)
+            if (signatures.remove(signature))
+                println("Materia eliminado correctamente")
+            else
+                println("No se puedo eliminar la materia solicitada, intentalo nuevamente")
+    }
 }
 
 
 fun removeFacultyOf(university: University) {
     val faculty = getFaculty(university)
-    if (faculty != null)
-        if (university.removeFaculty(faculty))
-            println("Facultad eliminada correctamente")
-        else
-            println("No se puedo eliminar la facultad solicitada")
+    runBlocking {
+        println("Eliminando facultad, esto podría tomar unos segundos...")
+        delay(Random.nextLong(4000))
+        if (faculty != null)
+            if (university.removeFaculty(faculty))
+                println("Facultad eliminada correctamente")
+            else
+                println("No se puedo eliminar la facultad solicitada")
+    }
 }
 
 fun removeProfessorOf(faculty: Faculty, professor: Professor) {
-    if (faculty.removeProfessor(professor) != null)
-        println("Profesor eliminado correctamente")
-    else
-        println("No se puedo eliminar el profesor solicitado")
+    runBlocking {
+        println("Eliminando profesor, esto podría tomar unos segundos...")
+        delay(Random.nextLong(4000))
+        if (faculty.removeProfessor(professor) != null)
+            println("Profesor eliminado correctamente")
+        else
+            println("No se puedo eliminar el profesor solicitado")
+    }
+
 }
 
 
